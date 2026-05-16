@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACHI's Gallery - Premium Cyber Invoice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #030712;
+            font-family: 'Rajdhani', sans-serif;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 60px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Hexagon / Cyber Radial Glow Background Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 242, 254, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(126, 217, 87, 0.15) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .invoice-container {
+            background: rgba(10, 15, 30, 0.8);
+            border: 2px solid #00f2fe;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.25), inset 0 0 15px rgba(0, 242, 254, 0.1);
+            width: 100%;
+            max-width: 850px;
+            padding: 50px;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            position: relative;
+        }
+
+        /* Top Bar Border Gradient Decor */
+        .invoice-container::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            right: 40px;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, #00f2fe, #7ed957);
+            box-shadow: 0 0 10px #00f2fe;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.3);
+            padding-bottom: 25px;
+            margin-bottom: 40px;
+        }
+
+        .brand h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 34px;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #00f2fe 0%, #7ed957 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.5));
+            letter-spacing: 2px;
+        }
+
+        .brand p {
+            font-size: 16px;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .meta-info {
+            text-align: right;
+            font-size: 16px;
+        }
+
+        .meta-info div {
+            margin-bottom: 4px;
+        }
+
+        .meta-info strong {
+            color: #00f2fe;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Tech Modern Grid Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        th {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            color: #00f2fe;
+            font-size: 14px;
+            letter-spacing: 1px;
+            padding: 15px 20px;
+            text-align: left;
+            background: rgba(0, 242, 254, 0.08);
+            border-bottom: 2px solid #00f2fe;
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        td span {
+            display: block;
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+
+        .price-col {
+            text-align: right;
+            font-family: 'Orbitron', sans-serif;
+            color: #e2e8f0;
+        }
+
+        /* Summary & Glow Neon Totals */
+        .summary-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            width: 320px;
+            font-size: 18px;
+            padding: 4px 0;
+        }
+
+        .summary-row.main-total {
+            border-top: 1px solid rgba(0, 242, 254, 0.3);
+            padding-top: 15px;
+            font-size: 22px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #00f2fe;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .summary-row.paid-status {
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #7ed957;
+            text-shadow: 0 0 10px rgba(126, 217, 87, 0.5);
+        }
+
+        /* Glowing Neon Badge Seal */
+        .neon-seal-badge {
+            position: absolute;
+            top: 40px;
+            right: 250px;
+            border: 3px solid #7ed957;
+            color: #7ed957;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            padding: 6px 18px;
+            text-transform: uppercase;
+            border-radius: 6px;
+            transform: rotate(-8deg);
+            box-shadow: 0 0 15px rgba(126, 217, 87, 0.4), inset 0 0 10px rgba(126, 217, 87, 0.2);
+            text-shadow: 0 0 5px rgba(126, 217, 87, 0.6);
+            background: rgba(10, 15, 30, 0.9);
+            letter-spacing: 2px;
+        }
+
+        /* Glowing Tech Border for QR Box */
+        .qr-outer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px dashed rgba(0, 242, 254, 0.3);
+            padding-top: 40px;
+            text-align: center;
+        }
+
+        .hex-clip-frame {
+            padding: 6px;
+            background: linear-gradient(135deg, #00f2fe, #7ed957);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            margin-bottom: 15px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .qr-box {
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-box img {
+            width: 140px;
+            height: 140px;
+        }
+
+        .qr-outer-section p {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: #7ed957;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(126, 217, 87, 0.3);
+        }
+
+        .qr-outer-section .url-text {
+            font-family: 'Rajdhani', sans-serif;
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 5px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .qr-outer-section .url-text:hover {
+            color: #00f2fe;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #475569;
+            margin-top: 40px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invoice-container">
+        <div class="neon-seal-badge">PAID</div>
+
+        <div class="header">
+            <div class="brand">
+                <h1>ACHI'S GALLERY</h1>
+                <p>Platform Development Project</p>
+            </div>
+            <div class="meta-info">
+                <div>INVOICE NO: <strong>#AG-2026-01</strong></div>
+                <div>DATE: <strong>16/05/2026</strong></div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th style="text-align: right;">Line Total (LKR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        ACHI'S GALLERY MAIN WEB SITE
+                        <span>Premium architectural UI/UX frontend with interactive grid gallery.</span>
+                    </td>
+                    <td class="price-col">25,000.00</td>
+                </tr>
+                <tr>
+                    <td>
+                        ADMIN WEB APP
+                        <span>Secured cloud dashboard panel for real-time asset & content uploads.</span>
+                    </td>
+                    <td class="price-col">20,000.00</td>
+                </tr>
+                <tr>
+                    <td>
+                        HOSTING SETUP
+                        <span>Production node server routing setup via Netlify, build hooks, and HTTPS enforcement.</span>
+                    </td>
+                    <td class="price-col">5,000.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="summary-block">
+            <div class="summary-row">
+                <span style="color: #64748b;">SUB TOTAL:</span>
+                <span>LKR 50,000.00</span>
+            </div>
+            <div class="summary-row">
+                <span style="color: #64748b;">DOMAIN NAME:</span>
+                <span style="color: #64748b; font-style: italic;">NOT INCLUDED</span>
+            </div>
+            <div class="summary-row main-total">
+                <span>TOTAL COST:</span>
+                <span>LKR 50,000.00</span>
+            </div>
+            <div class="summary-row paid-status">
+                <span>AMOUNT PAID:</span>
+                <span>LKR 50,000.00</span>
+            </div>
+        </div>
+
+        <div class="qr-section">
+            <div class="hex-clip-frame">
+                <div class="qr-box">
+                    <img src="data:image/png;base64,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" alt="Cyber Invoice QR">
+                </div>
+            </div>
+            <p>SCAN TO LAUNCH PLATFORM</p>
+            <a href="https://achisgallary.netlify.app/" target="_blank" class="url-text">https://achisgallary.netlify.app/</a>
+        </div>
+    </div>
+
+</body>
+</html>
+
